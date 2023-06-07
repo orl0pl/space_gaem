@@ -15,14 +15,16 @@ var planets = [
     {
         x: 770,
         y: 999,
-        mass: 1000,
-        color: "blue"
+        mass: 11000,
+        color: "blue",
+        radius: 100
     },
     {
         x: -400,
         y: 220,
-        mass: 2000,
-        color: "red"
+        mass: 12000,
+        color: "red",
+        radius: 120
     }
 ];
 
@@ -31,7 +33,6 @@ var camera = {
     x: 0,
     y: 0
 };
-
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -43,7 +44,7 @@ function render() {
     planets.forEach(function (planet) {
         ctx.fillStyle = planet.color;
         ctx.beginPath();
-        ctx.arc(planet.x, planet.y, 10, 0, 2 * Math.PI);
+        ctx.arc(planet.x, planet.y, planet.radius, 0, 2 * Math.PI);
         ctx.fill();
     });
 
@@ -66,6 +67,60 @@ function render() {
     ctx.fillStyle = "white";
     ctx.fill();
 
+}
+function render() {
+  clearCanvas();
+
+  translateCanvas();
+
+  drawPlanets();
+
+  restoreCanvas();
+
+  drawRocket();
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function translateCanvas() {
+  ctx.save();
+  const xTranslate = -camera.x + canvas.width / 2;
+  const yTranslate = -camera.y + canvas.height / 2;
+  ctx.translate(xTranslate, yTranslate);
+}
+
+function drawPlanets() {
+  planets.forEach(function (planet) {
+    ctx.fillStyle = planet.color;
+    ctx.beginPath();
+    ctx.arc(planet.x, planet.y, 10, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+}
+
+function restoreCanvas() {
+  ctx.restore();
+}
+
+function drawRocket() {
+  const angle = rocket.direction * Math.PI / 180;
+  const xTranslate = rocket.x - camera.x;
+  const yTranslate = rocket.y - camera.y;
+
+  ctx.beginPath();
+  ctx.translate(xTranslate, yTranslate);
+  ctx.rotate(angle);
+  ctx.translate(-xTranslate, -yTranslate);
+  ctx.moveTo(xTranslate, yTranslate);
+  ctx.lineTo(xTranslate - 5, yTranslate + 10);
+  ctx.lineTo(xTranslate + 5, yTranslate + 10);
+  ctx.closePath();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+  ctx.fillStyle = "white";
+  ctx.fill();
 }
 
 const info = document.getElementById("info");
