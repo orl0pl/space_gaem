@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rocket Game</title>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      background-color: #111;
+      color: white;
+      font-family: monospace,sans-serif;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 4%;
+    }
+
+    #info {
+      display: block;
+    }
+
+    canvas {
+      border: 1px solid black;
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <span id="info">
+    Rocket Info:
+  </span>
+  <script src="game.js"></script>
+</body>
+
+</html>
